@@ -9,26 +9,26 @@ namespace WpfApp_XML.Services
 {
     public class ChannelService : IChannelService
     {
-        Channel? records = new Channel();
-        Items[] list;
+        string path = $"{Environment.CurrentDirectory}/data.xml"; // там где и EXE файл.
+
+        public Items[] items;
+
         public async Task<Channel> AsyncRead()
         {
-            string path = $"{Environment.CurrentDirectory}/data.xml";
-
             await Task.Run(() =>
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(Channel));
                 FileStream fs = new FileStream(path, FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
-
-                records = (Channel)xmlSerializer.Deserialize(reader);
+                items = ((Channel)xmlSerializer.Deserialize(reader)).Items;
+                reader.Close();
             });
-            return new Channel(); // для теста, нужно поставить останов сдесь
+            return new Channel(); // для теста, нужно поставить останов сдесь -> this - Items [0] ... [n]
         }
 
-        public async Task<Items> ReadReg()
+        public async Task<Channel> ReadReg()
         {
-            string path = $"{Environment.CurrentDirectory}/data.xml";
+
 
             StreamReader reader = new StreamReader(path, Encoding.UTF8);
             var content = reader.ReadToEnd();
@@ -74,7 +74,7 @@ namespace WpfApp_XML.Services
                     MessageBox.Show("Совпадений не найдено");
                 }
             });
-            return new Items(); // для теста, нужно поставить останова сдесь
+            return null; /*new Items();*/ // для теста, нужно поставить останова сдесь
         }
     }
 }

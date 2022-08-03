@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WpfApp_XML.Models
+﻿namespace WpfApp_XML.Models
 {
     public class Items
     {
@@ -28,11 +22,6 @@ namespace WpfApp_XML.Models
             Description = description;
             Category = category;
             PubDate = pubDate;
-        }
-
-        public override string ToString()
-        {
-            return $"{Title} {Link} {Description} {Category} {PubDate}";
         }
     }
 }

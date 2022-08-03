@@ -15,6 +15,5 @@
         <Button x:Name="toWord" Content=".DOC (DOCTOR)" HorizontalAlignment="Left" Margin="57,307,0,0" VerticalAlignment="Top" Height="24" Width="132
                 " Click="toWord_Click"/>
         <Button x:Name="toExcel" Content=".XSLS" HorizontalAlignment="Left" Margin="57,351,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toExcel_Click"/>
-
     </Grid>
 </Window>

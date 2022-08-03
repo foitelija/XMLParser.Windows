@@ -9,6 +9,7 @@ namespace WpfApp_XML.Services
     public interface IChannelService
     {
         Task<Channel> AsyncRead();
-        Task<Items> ReadReg();
+        Task<Channel> ReadReg();
+
     }
 }

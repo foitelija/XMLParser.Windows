@@ -11,11 +11,6 @@ namespace WpfApp_XML.Models
     public class Channel
     {
         [XmlElement("item")]
-        public List<Items> ChannelsList { get; set; } = new List<Items>();
-
-        public override string ToString()
-        {
-            return $"{ChannelsList}";
-        }
+        public Items[] Items { get; set; } //Массив объектов, а не лист, как было до этого.
     }
 }
