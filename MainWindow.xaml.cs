@@ -58,7 +58,7 @@ namespace WpfApp_XML
             {
                 if(response != null)
                 {
-                    MessageBox.Show("Считывание при помоги RegEx произошло успешно.");
+                    MessageBox.Show("Считывание при помоги RegEx произошло успешно. \n Теперь можно делать любой из экспортов.");
                 }
                 else
                 {
@@ -67,9 +67,13 @@ namespace WpfApp_XML
             }
         }
 
-        private void toTxt_Click(object sender, RoutedEventArgs e)
+        private async void toTxt_Click(object sender, RoutedEventArgs e)
         {
-
+            if(_service.AsyncRead == null)
+            {
+                await _service.AsyncRead();
+            }
+            var response = _service.toTxt();
         }
 
         private void toWord_Click(object sender, RoutedEventArgs e)

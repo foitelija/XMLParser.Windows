@@ -10,6 +10,7 @@ namespace WpfApp_XML.Services
     public class ChannelService : IChannelService
     {
         string path = $"{Environment.CurrentDirectory}/data.xml"; // там где и EXE файл.
+        string pathTxt = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
 
         public Items[] items;
 
@@ -23,13 +24,12 @@ namespace WpfApp_XML.Services
                 items = (xmlSerializer.Deserialize(reader) as Channel).Items;
                 reader.Close();
             });
+
             return new Channel(); // для теста, нужно поставить останов сдесь -> this - Items [0] ... [n]
         }
 
         public async Task<Items> ReadReg()
         {
-            string path = $"{Environment.CurrentDirectory}/data.xml";
-
             StreamReader reader = new StreamReader(path, Encoding.UTF8);
             var content = reader.ReadToEnd();
 
@@ -75,6 +75,22 @@ namespace WpfApp_XML.Services
                 }
             });
             return new Items(); // для теста, нужно поставить точку останова сдесь
+        }
+
+        public Task toTxt()
+        {
+            using (StreamWriter streamWriter = new StreamWriter(pathTxt, true))
+            {
+                foreach(Items itemsToTxt in items)
+                {
+                    streamWriter.WriteLine(itemsToTxt.Title);
+                    streamWriter.WriteLine(itemsToTxt.Link);
+                    streamWriter.WriteLine(itemsToTxt.Description);
+                    streamWriter.WriteLine(itemsToTxt.Category);
+                    streamWriter.WriteLine(itemsToTxt.PubDate);
+                }
+            }
+            return Task.CompletedTask; // временная заглушка перед Async.
         }
     }
 }
