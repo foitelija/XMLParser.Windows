@@ -20,6 +20,7 @@ namespace WpfApp_XML
     /// </summary>
     public partial class MainWindow : Window
     {
+
         private ChannelService _service;
 
         public MainWindow()
@@ -29,10 +30,12 @@ namespace WpfApp_XML
             LoadXml();
         }
 
-        private async void LoadXml()
+        private Task LoadXml()
         {
-            var GetDataList = await Task.Run(() => _service.AsyncRead());
-            DataLoader.DataContext = GetDataList;
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml($"{Environment.CurrentDirectory}/data.xml");
+            DataLoader.ItemsSource = dataSet.Tables[0].DefaultView;
+            return Task.CompletedTask;
         }
 
         private async void ReadAsync_Click(object sender, RoutedEventArgs e)
@@ -43,11 +46,40 @@ namespace WpfApp_XML
             {
                 MessageBox.Show("Асинхронное считывание произошло успешно.");
             }
+            else 
+            {
+                MessageBox.Show("Егор404");
+            }
         }
 
         private async void ReadRegular_Click(object sender, RoutedEventArgs e)
         {
-            _service.ReadReg();
+            var  response = _service.ReadReg();
+            {
+                if(response != null)
+                {
+                    MessageBox.Show("Считывание при помоги RegEx произошло успешно.");
+                }
+                else
+                {
+                    MessageBox.Show("Егор404");
+                }
+            }
+        }
+
+        private void toTxt_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void toWord_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void toExcel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

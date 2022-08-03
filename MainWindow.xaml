@@ -7,9 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="ReadAsync" Content="Button" HorizontalAlignment="Left" Margin="27,33,0,0" VerticalAlignment="Top" Height="93" Width="132" Click="ReadAsync_Click"/>
+        <Button x:Name="ReadAsync" Content="Async Read" HorizontalAlignment="Left" Margin="57,55,0,0" VerticalAlignment="Top" Height="60" Width="132" Click="ReadAsync_Click"/>
         <DataGrid x:Name="DataLoader" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="241,33,24,112"/>
-        <Button x:Name="ReadRegular" Content="Button" HorizontalAlignment="Left" Margin="27,178,0,0" VerticalAlignment="Top" Height="96" Width="132" Click="ReadRegular_Click"/>
+        <Button x:Name="ReadRegular" Content="RegEx Read" HorizontalAlignment="Left" Margin="57,143,0,0" VerticalAlignment="Top" Height="60" Width="132" Click="ReadRegular_Click"/>
+        <Separator HorizontalAlignment="Left" Margin="0,242,0,0" VerticalAlignment="Top" Width="241"/>
+        <Button x:Name="toTxt" Content=".TXT" HorizontalAlignment="Left" Margin="57,265,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toTxt_Click"/>
+        <Button x:Name="toWord" Content=".DOC (DOCTOR)" HorizontalAlignment="Left" Margin="57,307,0,0" VerticalAlignment="Top" Height="24" Width="132
+                " Click="toWord_Click"/>
+        <Button x:Name="toExcel" Content=".XSLS" HorizontalAlignment="Left" Margin="57,351,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toExcel_Click"/>
 
     </Grid>
 </Window>
