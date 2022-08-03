@@ -20,15 +20,15 @@ namespace WpfApp_XML.Services
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(Channel));
                 FileStream fs = new FileStream(path, FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
-                items = ((Channel)xmlSerializer.Deserialize(reader)).Items;
+                items = (xmlSerializer.Deserialize(reader) as Channel).Items;
                 reader.Close();
             });
             return new Channel(); // для теста, нужно поставить останов сдесь -> this - Items [0] ... [n]
         }
 
-        public async Task<Channel> ReadReg()
+        public async Task<Items> ReadReg()
         {
-
+            string path = $"{Environment.CurrentDirectory}/data.xml";
 
             StreamReader reader = new StreamReader(path, Encoding.UTF8);
             var content = reader.ReadToEnd();
@@ -74,7 +74,7 @@ namespace WpfApp_XML.Services
                     MessageBox.Show("Совпадений не найдено");
                 }
             });
-            return null; /*new Items();*/ // для теста, нужно поставить останова сдесь
+            return new Items(); // для теста, нужно поставить точку останова сдесь
         }
     }
 }
