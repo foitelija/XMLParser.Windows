@@ -64,16 +64,9 @@
             await _service.toDocx();
         }
 
-        private void toExcel_Click(object sender, RoutedEventArgs e)
+        private async void toExcel_Click(object sender, RoutedEventArgs e)
         {
-            Excel.Application exApp = new Excel.Application();
-
-            exApp.Workbooks.Add();
-            Excel.Worksheet wsh = (Excel.Worksheet)exApp.ActiveSheet;
-            int i, j;
-            //строки
-           
-            exApp.Visible = true;
+            await _service.toXls();
         }
     }
 }

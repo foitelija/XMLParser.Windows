@@ -128,11 +128,11 @@
                     {
                         //Это кстати прикол какой-то, мне Envr.NL не работает.......
                         textParagraph.Range.Text = Environment.NewLine;
-                        textParagraph.Range.Text = $"{itemList.Title}{Environment.NewLine}";
-                        textParagraph.Range.Text = $"{itemList.Link}{Environment.NewLine}";
-                        textParagraph.Range.Text = $"{itemList.Description}{Environment.NewLine}";
                         textParagraph.Range.Text = $"{itemList.Category}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.Title}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.Description}{Environment.NewLine}";
                         textParagraph.Range.Text = $"{itemList.PubDate}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.Link}{Environment.NewLine}";
                     }
                     document.SaveAs2(pathDoc);
                     document.Close();
@@ -152,7 +152,30 @@
             return items;
         }
 
-        public Task<Items[]> toXls()
+        public async Task<Items[]> toXls()
+        {
+            if (items == null)
+            {
+                await AsyncRead();
+            }
+            else
+            {
+                await Task.Run(() =>
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                    using(ExcelPackage pck = new ExcelPackage())
+                    {
+                        pck.Workbook.Worksheets.Add("Channels").Cells[1, 1].LoadFromCollection(items, true);
+                        pck.SaveAs(new FileInfo(pathXls));
+                    }
+                });
+            }
+            
+            return items;
+        }
+
+        public Task<DataSet> Loader()
         {
             throw new NotImplementedException();
         }
