@@ -13,6 +13,8 @@ namespace WpfApp_XML.Services
 
         //Экспорт
         Task<Items[]> toTxt();
+        Task<Items[]> toDocx();
+        Task<Items[]> toXls();
 
     }
 }

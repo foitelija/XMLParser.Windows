@@ -30,10 +30,10 @@ namespace WpfApp_XML
             LoadXml();
         }
 
-        private Task LoadXml()
+        private Task LoadXml() // если будет время, переделаю в Async (если смогу)
         {
             DataSet dataSet = new DataSet();
-            dataSet.ReadXml($"{Environment.CurrentDirectory}/data.xml");
+            dataSet.ReadXml($"{Environment.CurrentDirectory}/dataDGV.xml");
             DataLoader.ItemsSource = dataSet.Tables[0].DefaultView;
             return Task.CompletedTask;
         }
@@ -71,8 +71,9 @@ namespace WpfApp_XML
         {
             if (_service.AsyncRead != null)
             {
-                var response = _service.toTxt();
-                Process.Start(@$"D:\MY_PROJECTS_ON_CSHARP\WpfApp_XML\bin\Debug\net6.0-windows\notTxt.txt"); // пофиксить.
+                await _service.toTxt();
+                await Task.Delay(1800); // ждём 1.8 секунды
+                //Process.Start(@$"D:\MY_PROJECTS_ON_CSHARP\WpfApp_XML\bin\Debug\net6.0-windows\notTxt.txt"); // пофиксить.
             }
             await _service.AsyncRead();
         }

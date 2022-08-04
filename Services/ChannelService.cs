@@ -11,6 +11,8 @@ namespace WpfApp_XML.Services
     {
         string path = $"{Environment.CurrentDirectory}/data.xml"; // там где и EXE файл.
         string pathTxt = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
+        string pathDoc = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
+        string pathXls = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
 
         public Items[] items;
 
@@ -37,7 +39,7 @@ namespace WpfApp_XML.Services
             MatchCollection matches = item.Matches(content);
 
             List<Items> result = new List<Items>();
-            var channel = new Items();
+            var itemsList = new Items();
 
             await Task.Run(() =>
             {
@@ -46,27 +48,27 @@ namespace WpfApp_XML.Services
                     foreach (Match match in matches)
                     {
 
-                        Regex Title = new Regex(@"<title>[\s\S\w\W\d\D]*?</title>");
+                        Regex Title = new Regex(@"<title>[\s\S\w\W]*?</title>");
                         MatchCollection mTitle = Title.Matches(match.Value);
-                        channel.Title = mTitle[0].Value.Replace("<title>", "").Replace("</title>", "");
+                        itemsList.Title = mTitle[0].Value.Replace("<title>", "").Replace("</title>", "");
 
-                        Regex Link = new Regex(@"<link>[\s\S\w\W\d\D]*?</link>");
+                        Regex Link = new Regex(@"<link>[\s\S\w\W*?</link>");
                         MatchCollection mLink = Link.Matches(match.Value);
-                        channel.Link = mLink[0].Value.Replace("<link>", "").Replace("</link>", "");
+                        itemsList.Link = mLink[0].Value.Replace("<link>", "").Replace("</link>", "");
 
-                        Regex Description = new Regex(@"<description>[\s\S\w\W\d\D]*?</description>");
+                        Regex Description = new Regex(@"<description>[\s\S\w\W]*?</description>");
                         MatchCollection mDescription = Description.Matches(match.Value);
-                        channel.Description = mDescription[0].Value.Replace("<description>", "").Replace("</description>", "");
+                        itemsList.Description = mDescription[0].Value.Replace("<description>", "").Replace("</description>", "");
 
-                        Regex Category = new Regex(@"<category>[\s\S\w\W\d\D]*?</category>");
+                        Regex Category = new Regex(@"<category>[\s\S\w\W]*?</category>");
                         MatchCollection mCategory = Category.Matches(match.Value);
-                        channel.Category = mCategory[0].Value.Replace("<category>", "").Replace("</category>", "");
+                        itemsList.Category = mCategory[0].Value.Replace("<category>", "").Replace("</category>", "");
 
-                        Regex regexPubDate = new Regex(@"<pubDate>[\s\S\w\W\d\D]*?</pubDate>");
-                        MatchCollection matchePubDate = regexPubDate.Matches(match.Value);
-                        channel.PubDate = matchePubDate[0].Value.Replace("<pubDate>", "").Replace("</pubDate>", "");
+                        Regex PubDate = new Regex(@"<pubDate>[\s\S\w\W\d\D]*?</pubDate>");
+                        MatchCollection matchePubDate = PubDate.Matches(match.Value);
+                        itemsList.PubDate = matchePubDate[0].Value.Replace("<pubDate>", "").Replace("</pubDate>", "");
 
-                        result.Add(channel);
+                        result.Add(itemsList);
                     }
                 }
                 else
@@ -96,9 +98,20 @@ namespace WpfApp_XML.Services
                         streamWriter.WriteLine(itemsToTxt.Category);
                         streamWriter.WriteLine(itemsToTxt.PubDate);
                     }
+                    streamWriter.Close();
                 });
             }
             return items; //Async, по останову всё работает как надо
+        }
+
+        public Task<Items[]> toDocx()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Items[]> toXls()
+        {
+            throw new NotImplementedException();
         }
     }
 }
