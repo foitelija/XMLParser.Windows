@@ -25,7 +25,7 @@ namespace WpfApp_XML.Services
                 reader.Close();
             });
 
-            return new Channel(); // для теста, нужно поставить останов сдесь -> this - Items [0] ... [n]
+            return new Channel(); // для теста, нужно поставить останов сдесь -> this - Items [0] ... [n]. Или сразу запускать toTXT
         }
 
         public async Task<Items> ReadReg()
@@ -77,20 +77,28 @@ namespace WpfApp_XML.Services
             return new Items(); // для теста, нужно поставить точку останова сдесь
         }
 
-        public Task toTxt()
+        public async Task<Items[]> toTxt()
         {
+            if(items == null)
+            {
+                await AsyncRead();
+            }
             using (StreamWriter streamWriter = new StreamWriter(pathTxt, true))
             {
-                foreach(Items itemsToTxt in items)
+                await Task.Run(() =>
                 {
-                    streamWriter.WriteLine(itemsToTxt.Title);
-                    streamWriter.WriteLine(itemsToTxt.Link);
-                    streamWriter.WriteLine(itemsToTxt.Description);
-                    streamWriter.WriteLine(itemsToTxt.Category);
-                    streamWriter.WriteLine(itemsToTxt.PubDate);
-                }
+                    foreach (Items itemsToTxt in items)
+                    {
+                        streamWriter.WriteLine();
+                        streamWriter.WriteLine(itemsToTxt.Title);
+                        streamWriter.WriteLine(itemsToTxt.Link);
+                        streamWriter.WriteLine(itemsToTxt.Description);
+                        streamWriter.WriteLine(itemsToTxt.Category);
+                        streamWriter.WriteLine(itemsToTxt.PubDate);
+                    }
+                });
             }
-            return Task.CompletedTask; // временная заглушка перед Async.
+            return items; //Async, по останову всё работает как надо
         }
     }
 }

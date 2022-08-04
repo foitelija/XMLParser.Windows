@@ -12,7 +12,7 @@ namespace WpfApp_XML.Services
         Task<Items> ReadReg();
 
         //Экспорт
-        Task toTxt();
+        Task<Items[]> toTxt();
 
     }
 }

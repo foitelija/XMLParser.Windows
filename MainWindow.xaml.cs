@@ -69,11 +69,12 @@ namespace WpfApp_XML
 
         private async void toTxt_Click(object sender, RoutedEventArgs e)
         {
-            if(_service.AsyncRead == null)
+            if (_service.AsyncRead != null)
             {
-                await _service.AsyncRead();
+                var response = _service.toTxt();
+                Process.Start(@$"D:\MY_PROJECTS_ON_CSHARP\WpfApp_XML\bin\Debug\net6.0-windows\notTxt.txt"); // пофиксить.
             }
-            var response = _service.toTxt();
+            await _service.AsyncRead();
         }
 
         private void toWord_Click(object sender, RoutedEventArgs e)

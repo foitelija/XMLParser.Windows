@@ -14,3 +14,4 @@ global using WpfApp_XML.Models;
 global using WpfApp_XML.Services;
 global using Excel = Microsoft.Office.Interop.Excel;
 global using Word = Microsoft.Office.Interop.Word;
+global using System.Diagnostics;
