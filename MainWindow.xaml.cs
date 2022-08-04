@@ -17,7 +17,7 @@
         private async Task<DataSet> LoadXml() // Тут я по пути меньшего сопротивления пошёл.
         {
             DataSet dataSet = new DataSet();
-            dataSet.ReadXml($"{Environment.CurrentDirectory}/dataDGV.xml"); // dataDGV потому что, обычный data занят асинхронными методами, случаются конфликты.
+            dataSet.ReadXml($"{Environment.CurrentDirectory}/Import/dataDGV.xml");
             DataLoader.ItemsSource = dataSet.Tables[0].DefaultView;
             return dataSet;
         }
@@ -29,9 +29,7 @@
             if(response != null)
             {
                 MessageBox.Show("Асинхронное считывание произошло успешно. \nМожно делать экспорт.");
-                //затычка
                 await LoadXml();
-
             }
             else 
             {

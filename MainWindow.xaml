@@ -5,15 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp_XML"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="XML Parser by https://github.com/foitelija" Height="450" Width="800">
     <Grid>
-        <Button x:Name="ReadAsync" Content="Async Read" HorizontalAlignment="Left" Margin="57,55,0,0" VerticalAlignment="Top" Height="60" Width="132" Click="ReadAsync_Click"/>
-        <DataGrid x:Name="DataLoader" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="241,33,24,112"/>
-        <Button x:Name="ReadRegular" Content="RegEx Read" HorizontalAlignment="Left" Margin="57,143,0,0" VerticalAlignment="Top" Height="60" Width="132" Click="ReadRegular_Click"/>
-        <Separator HorizontalAlignment="Left" Margin="0,242,0,0" VerticalAlignment="Top" Width="241"/>
-        <Button x:Name="toTxt" Content=".TXT" HorizontalAlignment="Left" Margin="57,265,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toTxt_Click"/>
-        <Button x:Name="toWord" Content=".DOC (DOCTOR)" HorizontalAlignment="Left" Margin="57,307,0,0" VerticalAlignment="Top" Height="24" Width="132
-                " Click="toWord_Click"/>
-        <Button x:Name="toExcel" Content=".XSLS" HorizontalAlignment="Left" Margin="57,351,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toExcel_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="733*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="ReadAsync" Content="Async Read" HorizontalAlignment="Left" Margin="48,55,0,0" VerticalAlignment="Top" Height="60" Width="132" Click="ReadAsync_Click" Background="#FFFF9800" Grid.ColumnSpan="2" FontFamily="Century"/>
+        <DataGrid x:Name="DataLoader" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="140,0,0,0" Grid.Column="1" Background="#FFD3DCDC" FontFamily="Century" FontSize="20"/>
+        <Button x:Name="ReadRegular" Content="RegEx Read" HorizontalAlignment="Left" Margin="48,143,0,0" VerticalAlignment="Top" Height="60" Width="132" Click="ReadRegular_Click" Background="#FFC3FF6F" Grid.ColumnSpan="2" FontFamily="Century"/>
+        <Separator HorizontalAlignment="Left" Margin="-9,242,0,0" VerticalAlignment="Top" Width="211" Grid.ColumnSpan="2"/>
+        <Button x:Name="toTxt" Content=".TXT" HorizontalAlignment="Left" Margin="48,265,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toTxt_Click" Grid.ColumnSpan="2" FontFamily="Century"/>
+        <Button x:Name="toWord" Content=".DOC" HorizontalAlignment="Left" Margin="48,307,0,0" VerticalAlignment="Top" Height="24" Width="132
+                " Click="toWord_Click" Grid.ColumnSpan="2" FontFamily="Century"/>
+        <Button x:Name="toExcel" Content=".XSLS" HorizontalAlignment="Left" Margin="48,351,0,0" VerticalAlignment="Top" Height="24" Width="132" Click="toExcel_Click" Grid.ColumnSpan="2" FontFamily="Century"/>
     </Grid>
 </Window>

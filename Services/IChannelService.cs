@@ -9,8 +9,5 @@
         Task<Items[]> toTxt();
         Task<Items[]> toDocx();
         Task<Items[]> toXls();
-
-        //ДатаСет Лоадер
-        Task<DataSet> Loader();
     }
 }

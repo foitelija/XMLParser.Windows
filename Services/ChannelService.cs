@@ -2,10 +2,10 @@
 {
     public class ChannelService : IChannelService
     {
-        string path = $"{Environment.CurrentDirectory}/data.xml"; // там где и EXE файл.
-        string pathTxt = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
-        string pathDoc = $"{Environment.CurrentDirectory}/Minecraft.docx"; // там где и EXE файл.
-        string pathXls = $"{Environment.CurrentDirectory}/GenshinImpact.xlsx"; // там где и EXE файл.
+        string path = $"{Environment.CurrentDirectory}/Import/data.xml"; // там где и EXE файл -> Папка Import.
+        string pathTxt = $"{Environment.CurrentDirectory}/Export/notTxt.txt"; // там где и EXE файл -> Папка Export.
+        string pathDoc = $"{Environment.CurrentDirectory}/Export/Minecraft.docx"; // там где и EXE файл -> Папка Export.
+        string pathXls = $"{Environment.CurrentDirectory}/Export/GenshinImpact.xlsx"; // там где и EXE файл -> Папка Export. 
 
         public Items[] items;
 
@@ -34,6 +34,7 @@
             List<Items> result = new List<Items>();
             var itemsList = new Items();
 
+
             await Task.Run(() =>
             {
                 if (matches.Count > 0)
@@ -45,7 +46,7 @@
                         MatchCollection mTitle = Title.Matches(match.Value);
                         itemsList.Title = mTitle[0].Value.Replace("<title>", "").Replace("</title>", "");
 
-                        Regex Link = new Regex(@"<link>[\s\S\w\W*?</link>");
+                        Regex Link = new Regex(@"<link>[\s\S\w\W]*?</link>");
                         MatchCollection mLink = Link.Matches(match.Value);
                         itemsList.Link = mLink[0].Value.Replace("<link>", "").Replace("</link>", "");
 
@@ -126,9 +127,10 @@
                 {
                     foreach (Items itemList in items)
                     {
-                        //Это кстати прикол какой-то, мне Envr.NL не работает.......
+                        //Это кстати прикол какой-то, без Envr.NL не работает.......
                         textParagraph.Range.Text = Environment.NewLine;
-                        textParagraph.Range.Text = $"{itemList.Category}{Environment.NewLine}";
+                        //типизированные строки
+                        textParagraph.Range.Text = $"{itemList.Category}{Environment.NewLine}"; 
                         textParagraph.Range.Text = $"{itemList.Title}{Environment.NewLine}";
                         textParagraph.Range.Text = $"{itemList.Description}{Environment.NewLine}";
                         textParagraph.Range.Text = $"{itemList.PubDate}{Environment.NewLine}";
@@ -170,14 +172,11 @@
                         pck.SaveAs(new FileInfo(pathXls));
                     }
                 });
+
+                MessageBox.Show("Экспорт в эксел произошёл успешно.");
             }
             
             return items;
-        }
-
-        public Task<DataSet> Loader()
-        {
-            throw new NotImplementedException();
         }
     }
 }
