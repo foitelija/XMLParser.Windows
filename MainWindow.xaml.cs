@@ -12,24 +12,26 @@
         {
             _service = new ChannelService();
             InitializeComponent();
-            LoadXml();
         }
 
-        private Task LoadXml() // если будет время, переделаю в Async (если смогу)
+        private async Task<DataSet> LoadXml() // Тут я по пути меньшего сопротивления пошёл.
         {
             DataSet dataSet = new DataSet();
-            dataSet.ReadXml($"{Environment.CurrentDirectory}/dataDGV.xml");
+            dataSet.ReadXml($"{Environment.CurrentDirectory}/dataDGV.xml"); // dataDGV потому что, обычный data занят асинхронными методами, случаются конфликты.
             DataLoader.ItemsSource = dataSet.Tables[0].DefaultView;
-            return Task.CompletedTask;
+            return dataSet;
         }
 
         private async void ReadAsync_Click(object sender, RoutedEventArgs e)
         {
-            var response = _service.AsyncRead();
+            var response = await _service.AsyncRead();
 
             if(response != null)
             {
-                MessageBox.Show("Асинхронное считывание произошло успешно.");
+                MessageBox.Show("Асинхронное считывание произошло успешно. \nМожно делать экспорт.");
+                //затычка
+                await LoadXml();
+
             }
             else 
             {
@@ -39,7 +41,7 @@
 
         private async void ReadRegular_Click(object sender, RoutedEventArgs e)
         {
-            var  response = _service.ReadReg();
+            var  response = await _service.ReadReg();
             {
                 if(response != null)
                 {
