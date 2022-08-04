@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WpfApp_XML.Services
+﻿namespace WpfApp_XML.Services
 {
     public class ChannelService : IChannelService
     {
         string path = $"{Environment.CurrentDirectory}/data.xml"; // там где и EXE файл.
         string pathTxt = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
-        string pathDoc = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
-        string pathXls = $"{Environment.CurrentDirectory}/notTxt.txt"; // там где и EXE файл.
+        string pathDoc = $"{Environment.CurrentDirectory}/Minecraft.docx"; // там где и EXE файл.
+        string pathXls = $"{Environment.CurrentDirectory}/GenshinImpact.xlsx"; // там где и EXE файл.
 
         public Items[] items;
 
@@ -85,28 +78,78 @@ namespace WpfApp_XML.Services
             {
                 await AsyncRead();
             }
-            using (StreamWriter streamWriter = new StreamWriter(pathTxt, true))
+            else
             {
-                await Task.Run(() =>
+                using (StreamWriter streamWriter = new StreamWriter(pathTxt, true))
                 {
-                    foreach (Items itemsToTxt in items)
+                    await Task.Run(() =>
                     {
-                        streamWriter.WriteLine();
-                        streamWriter.WriteLine(itemsToTxt.Title);
-                        streamWriter.WriteLine(itemsToTxt.Link);
-                        streamWriter.WriteLine(itemsToTxt.Description);
-                        streamWriter.WriteLine(itemsToTxt.Category);
-                        streamWriter.WriteLine(itemsToTxt.PubDate);
-                    }
-                    streamWriter.Close();
-                });
+                        foreach (Items itemsToTxt in items)
+                        {
+                            streamWriter.WriteLine();
+                            streamWriter.WriteLine(itemsToTxt.Category);
+                            streamWriter.WriteLine(itemsToTxt.Title);
+                            streamWriter.WriteLine(itemsToTxt.Description);
+                            streamWriter.WriteLine(itemsToTxt.PubDate);
+                            streamWriter.WriteLine(itemsToTxt.Link);
+                        }
+                        streamWriter.Close();
+                    });
+                }
+                MessageBox.Show("Bingo!!! Документ успешно создан, с вас хубабубабубабубабуба.");
+                try
+                {
+                    Process.Start("C:\\Windows\\System32\\notepad.exe", pathTxt);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Путь к блокноту не найден, автомат. открытие недоступно." + "\n" + ex.Message);
+                }
             }
             return items; //Async, по останову всё работает как надо
         }
 
-        public Task<Items[]> toDocx()
+        public async Task<Items[]> toDocx()
         {
-            throw new NotImplementedException();
+            if (items == null)
+            {
+                await AsyncRead();
+            }
+            else
+            {
+                Word.Application application = new Word.Application();
+                Word.Document document = application.Documents.Add();
+                //работаем с коллекцией для абзацев текста  http://wladm.narod.ru 
+                Word.Paragraph textParagraph = document.Content.Paragraphs.Add();
+
+                await Task.Run(() =>
+                {
+                    foreach (Items itemList in items)
+                    {
+                        //Это кстати прикол какой-то, мне Envr.NL не работает.......
+                        textParagraph.Range.Text = Environment.NewLine;
+                        textParagraph.Range.Text = $"{itemList.Title}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.Link}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.Description}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.Category}{Environment.NewLine}";
+                        textParagraph.Range.Text = $"{itemList.PubDate}{Environment.NewLine}";
+                    }
+                    document.SaveAs2(pathDoc);
+                    document.Close();
+                    application.Quit();
+                });
+                MessageBox.Show("Bingo!!! Документ успешно создан, с вас 5$.");
+                //открываем ворд после манипуляций с ним.
+                try
+                {
+                    application.Visible = true;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("RPC сервер недоступен. Требуется ручная перезагрузка через Пуск или Перазгрузка компьютера.", ex.Message);
+                }
+            }
+            return items;
         }
 
         public Task<Items[]> toXls()

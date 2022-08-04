@@ -1,19 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace WpfApp_XML
+﻿namespace WpfApp_XML
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -69,18 +54,12 @@ namespace WpfApp_XML
 
         private async void toTxt_Click(object sender, RoutedEventArgs e)
         {
-            if (_service.AsyncRead != null)
-            {
-                await _service.toTxt();
-                await Task.Delay(1800); // ждём 1.8 секунды
-                //Process.Start(@$"D:\MY_PROJECTS_ON_CSHARP\WpfApp_XML\bin\Debug\net6.0-windows\notTxt.txt"); // пофиксить.
-            }
-            await _service.AsyncRead();
+            await _service.toTxt();
         }
 
-        private void toWord_Click(object sender, RoutedEventArgs e)
+        private async void toWord_Click(object sender, RoutedEventArgs e)
         {
-
+            await _service.toDocx();
         }
 
         private void toExcel_Click(object sender, RoutedEventArgs e)
